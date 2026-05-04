@@ -14,18 +14,36 @@ When this skill triggers inside the repo, read:
 - `data/dates.json` and the latest `data/snapshots/*.json` before changing the UI.
 - `assets/app.js`, `assets/styles.css`, and `index.html` before changing the page.
 - `references/source-contract.md` before changing ClawHub request semantics.
+- `references/source-adapter-pattern.md` before adding changelog, model leaderboard,
+  or any non-ClawHub monitoring source.
 - `references/publishing.md` before changing GitHub Pages or Actions.
 
 ## Product Direction
 
-Maintain two surfaces:
+Maintain three surfaces:
 
 - **Public town board**: a phone-friendly GitHub Pages site where anyone can
   read the latest ClawHub Top100, growth lists, potential Skills, and history.
 - **Forkable Skill generator**: a repo plus Skill that lets users generate their
   own Skill radar without copying private tokens or personal notes.
+- **Source-monitoring workflow**: a repeatable pattern for turning public
+  leaderboards, changelogs, and release pages into dated snapshots, diffs,
+  reports, and optional Agent reminders.
 
-Keep the default story simple: "每天从 ClawHub 榜单里淘出增长最快的 AI Skill."
+Keep the default story simple: "每天从公开榜单和更新日志里淘出值得看的 AI 变化."
+ClawHub Top100 is the first source because it is complex enough to prove the
+workflow: runtime request, Convex path, cursor pagination, Top100 normalization,
+historical diffs, reports, and a public board.
+
+Do not position this as "just a webpage". The page is the town board; the Skill
+is the workflow contract that lets future agents maintain and extend the town.
+
+Good future source examples:
+
+- Claude Code changelog: monitor dated release notes and new capabilities.
+- Artificial Analysis model leaderboard: monitor model ranking, price, speed,
+  and benchmark changes.
+- Other public marketplaces or leaderboards with stable sort and pagination.
 
 ## First Run Usage
 
@@ -53,6 +71,8 @@ cron for notifications.
 
 ## Source Rules
 
+### Default ClawHub Source
+
 - The canonical ranking source is Convex `api/query`, path
   `skills:listPublicPageV4`.
 - Request args must keep `sort=downloads`, `dir=desc`,
@@ -61,6 +81,25 @@ cron for notifications.
 - Do not use `GET /api/v1/skills` as the primary ranking basis.
 - If API fields, path, or pagination change, write the limitation into both
   snapshot and report.
+
+### Adding New Sources
+
+Before adding a changelog, model leaderboard, release feed, or any non-ClawHub
+source, read `references/source-adapter-pattern.md` and create a source-specific
+contract file:
+
+```text
+skills/skillrush-town/references/source-contract-<source>.md
+```
+
+Do not merge a new source adapter unless it has:
+
+- a canonical URL or request contract
+- stable item or entry keys
+- snapshot schema
+- diff semantics
+- limitation handling
+- headless tests with fixtures or mocked network responses
 
 ## Daily Report Rules
 

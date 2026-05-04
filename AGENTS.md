@@ -8,6 +8,7 @@ Before changing data ingestion, publishing, GitHub Pages, reports, or tests, rea
 
 - `skills/skillrush-town/SKILL.md`
 - `skills/skillrush-town/references/source-contract.md`
+- `skills/skillrush-town/references/source-adapter-pattern.md`
 - `skills/skillrush-town/references/publishing.md`
 - `scripts/clawhub_daily.py`
 - `README.md`
@@ -15,6 +16,8 @@ Before changing data ingestion, publishing, GitHub Pages, reports, or tests, rea
 ## Source Contract
 
 Do not change the ClawHub Top100 source semantics unless the source contract is updated.
+
+For non-ClawHub sources such as changelogs, model leaderboards, or release feeds, read `skills/skillrush-town/references/source-adapter-pattern.md` first and create a source-specific contract before implementation.
 
 The canonical ranking source is:
 

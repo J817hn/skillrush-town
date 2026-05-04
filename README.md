@@ -6,6 +6,14 @@
 
 这些 Skill 可能还很粗糙，但值得看一眼。淘金就是这样。
 
+但淘金小镇不应该只是一个榜单网页。
+
+如果只是把 ClawHub Top100 展示出来，那做成普通 GitHub Pages 就够了。它真正值得做成 Skill 的地方，是把「发现一个公开信息源、固定抓取口径、每天留快照、做历史对比、生成报告、提醒用户」这整套路线沉淀下来。
+
+ClawHub Top100 是第一个矿点，因为它有真实运行态请求、Convex path、`nextCursor` 翻页和 Top100 拼接，足够复杂，适合拿来打样。后面同样可以接入 Claude Code changelog 这类更新日志，或者 Artificial Analysis 模型排行榜这类动态榜单。
+
+网页是公告板，Skill 是淘金方法。
+
 ## 你可以怎么用
 
 | 你想做什么 | 入口 |
@@ -14,6 +22,15 @@
 | 回看某一天 | 用页面顶部日期选择，或访问 `?date=YYYY-MM-DD` |
 | 做自己的小镇 | fork 仓库，保留 GitHub Actions |
 | 交给 Codex / Claude | 使用 `skills/skillrush-town/SKILL.md` |
+| 拓展新矿点 | 先写 `skills/skillrush-town/references/source-contract-<source>.md`，再做抓取和对比 |
+
+可以拓展的矿点类型：
+
+- 榜单翻页型：ClawHub Top100 这种需要固定排序、连续翻页、拼接完整榜单的来源。
+- 更新日志型：Claude Code changelog 这种每天观察有没有新版本、新功能、新限制的来源。
+- 模型排行型：Artificial Analysis 模型排行榜这种需要跟踪模型、价格、速度、指标变化的来源。
+
+每接入一个新矿点，都必须先写清楚 source contract，不能先写爬虫再补解释。
 
 ## 当前数据
 
@@ -119,7 +136,7 @@ numItems=25
 - ClawHub 可能改 Convex path 或字段名。
 - 第一次运行没有历史切片，不能写成日环比。
 - 如果分页失败，快照和日报必须写明。
-- 如果你 fork 后接入别的榜单，要重写 `source-contract.md`。
+- 如果你 fork 后接入别的来源，要新增 `skills/skillrush-town/references/source-contract-<source>.md`；只有替换默认 ClawHub 来源时才更新 `source-contract.md`。
 
 ## 给 Agent 的入口
 

@@ -7,6 +7,7 @@ Use this repository's project Skill as the source of truth:
 For ingestion changes, also read:
 
 - `skills/skillrush-town/references/source-contract.md`
+- `skills/skillrush-town/references/source-adapter-pattern.md`
 - `scripts/clawhub_daily.py`
 - `tests/test_clawhub_daily.py`
 
@@ -36,3 +37,5 @@ Browser/manual page checks are optional release checks, not baseline CI requirem
 The canonical ClawHub ranking source is Convex `skills:listPublicPageV4` via `POST https://wry-manatee-359.convex.cloud/api/query`.
 
 Top100 is built by requesting 4 pages with `numItems=25` and carrying `nextCursor` into the next request as `cursor`.
+
+For future sources such as Claude Code changelog or Artificial Analysis model leaderboard, do not reuse the ClawHub contract. Create a source-specific contract, fixture tests, and diff rules first.
